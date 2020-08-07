@@ -79,8 +79,6 @@ def get_annotation(capter_name1,sn_list, slice_list):
             # print(sn_list.index(i1))
             pass
 
-
-
 def makefile(path,s,d,bookname,capter_name, capter_name1,sn_list):
     ld = len(d)
     num = 0
@@ -130,6 +128,7 @@ if __name__ == '__main__':
     bookname = "python_180_zuo.pdf(程序员代码面试指南整理)"
     path = r'../python_arithmetic/'
     tpath = os.path.realpath(path)  # 绝对路径
+
     # print(tpath)
     lessons_list_large = []
     capter_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -142,6 +141,7 @@ if __name__ == '__main__':
     relative_list = []
     capter_name1 = ['第 1 章  栈和队列', '第 2 章  链表问题', '第 3 章  二叉树问题', '第 4 章  递归和动态规划', '第 5 章  字符串问题', '第 6 章  大数据和空间限制',
                     '第 7 章  位运算', '第 8 章  数组和矩阵问题', '第 9 章  其他题目']
+
     for i in range(1, cl + 1):
         cname = str(i) + capter_name[i - 1]
         # print(cname)
@@ -151,28 +151,42 @@ if __name__ == '__main__':
         cpath_list.append(cpath)
         relative_path = cname + 'catalogue.txt'
         relative_list.append(relative_path)
-    # print(cnamedir_list)
+    print(cnamedir_list)
     # print(cpath_list)
     source_path = tpath + '\\' + 'python_180zuo.txt'
-
     # print(source_path)
     # 得到切片文件下标
     slice_list, sn_list = slice_up(source_path, capter_name1)
-    # 拆分大文件内容到不同文件里
+    # 拆分大文件内容到不同文件里,用来做每一章每个算法题的笔记，可选
     split_file_into_different_files(slice_list, sn_list, cpath_list)
     # 废了获得注释
     # get_annotation(capter_name1, sn_list, slice_list)
-    makefile(tpath, lessons_list, cnamedir_list, bookname, capter_name, capter_name1,sn_list)
+    #参数列表:1路径 2每一章多少小节 3编号+章节名称 4书名 5每一章的章节名字 6第i章 每一章的章节名字capter_name1 7对应文件内容的list
+    makefile(tpath, lessons_list, cnamedir_list, bookname, capter_name, capter_name1, sn_list)
 
 #——————————————————————————————————————————————————————————————————————————————————————————
-
-    # now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    # print(now)
-    # print(type(now))
-    # cpath = os.getcwd()
-    # print(cpath)
-
     """
+    首先设置 1书名，2路径，3章节个数(可以自动生成l = [i for i in range(1,10)])，4每一章多少小节 5每一章的章节名字
+    第二步 设置切割文件得到切片文件下标:   5整个目录的文件路径source_path 6第i章 每一章的章节名字capter_name1
+    第三步 设置得到第二步的返回值 即:切片下标和对应文件内容的list
+    第四步 拆分大文件内容到不同文件里,用来做每一章每个算法题的笔记，可选
+    第五步 生成带目录注释的.py文件
+        调用makefile()函数来生成文件
+        参数列表说明:1路径 2每一章多少小节 3编号+章节名称 4书名 5每一章的章节名字 6第i章 每一章的章节名字capter_name1 7对应文件内容的list
+    """
+# ——————————————————————————————————————————————————————————————————————————————————————————
+
+
+
+
+
+# now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+# print(now)
+# print(type(now))
+# cpath = os.getcwd()
+# print(cpath)
+
+"""
     创建的第7本书
         程序员代码面试指南：IT 名企算法与数据结构题目最优解 / 左程云著 第二版
         2Deep Learning
