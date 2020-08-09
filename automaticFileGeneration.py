@@ -15,7 +15,8 @@ def test(nums):
     for i,v in enumerate(nums):
         print(i,v)
 #获得切片下标，返回切片下标和对应文件内容的list
-def slice_up(source_path,capter_name):
+def slice_up(source_path,capter_name1):
+    # print(source_path)
     sf = open(source_path, 'r', encoding='utf-8')
     # print(sf.readlines())
     sn_list = [sn.strip() for sn in sf.readlines()]
@@ -23,13 +24,14 @@ def slice_up(source_path,capter_name):
     last = len(sn_list)
     # print(last)
     slice_list = []
-    for cn in capter_name:
+    for cn in capter_name1:
         # print(cn)
         # print(sn_list.index(cn))
         slice_i = sn_list.index(cn)
         slice_list.append(slice_i)
     slice_list.append(last)
     # print(slice_list)
+    print(sn_list)
     return slice_list, sn_list
 
 #拆分大文件
@@ -85,14 +87,14 @@ def makefile(path,s,d,bookname,capter_name, capter_name1,sn_list):
     ll = [i for i in sn_list if i not in capter_name1]
     ll.append('end')
     count = 0
-    print(ll)
+    # print(ll)
     for root, dirs, files in os.walk(path):
         #print(root)#绝对路径
-        # print(dirs)
+        # print(root)
         for i in dirs:
             sub_path = path+"\\"+i
             if os.path.exists(sub_path):
-                # print(sub_path)
+                print(sub_path)
                 os.chdir(sub_path)#转换路径
                 cata = open(i+"catalogue.txt","a+")
                 cpath = os.getcwd()#当前目录
@@ -113,8 +115,8 @@ def makefile(path,s,d,bookname,capter_name, capter_name1,sn_list):
                             # f.write(str(d[num - 1]) + "." + str(j))
                             wline = '"""\nBOOK:'+bookname+"\n"+str(capter_name[num - 1]) + "_第" + str(j)+'题\n'+ll[count]+'\n"""'+'\n'
                             # 200805 beg
-                            if count > 183:
-                                break
+                            # if count > 183:
+                            #     break
                             count += 1
                             # 200805 end
                             print(wline)
@@ -125,44 +127,45 @@ def makefile(path,s,d,bookname,capter_name, capter_name1,sn_list):
     # print(num)
 
 if __name__ == '__main__':
-    bookname = "python_180_zuo.pdf(程序员代码面试指南整理)"
-    path = r'../python_arithmetic/'
-    tpath = os.path.realpath(path)  # 绝对路径
-
-    # print(tpath)
+    # bookname = "python_180_zuo.pdf(程序员代码面试指南整理)"
+    # path = r'../python_arithmetic/'
+    # tpath = os.path.realpath(path)  # 绝对路径
+    #
+    # # print(tpath)
     lessons_list_large = []
-    capter_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    capter_name = ['栈和队列', '链表问题', '二叉树问题', '递归和动态规划', '字符串问题', '大数据和空间限制', '位运算', '数组和矩阵问题', '其他题目']
-    lessons_list = [11, 20, 24, 20, 25, 7, 6, 31, 37]
-    cl = len(capter_list)
-    # print(cl)
     cnamedir_list = []
     cpath_list = []
     relative_list = []
-    capter_name1 = ['第 1 章  栈和队列', '第 2 章  链表问题', '第 3 章  二叉树问题', '第 4 章  递归和动态规划', '第 5 章  字符串问题', '第 6 章  大数据和空间限制',
-                    '第 7 章  位运算', '第 8 章  数组和矩阵问题', '第 9 章  其他题目']
+    # capter_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    # capter_name = ['栈和队列', '链表问题', '二叉树问题', '递归和动态规划', '字符串问题', '大数据和空间限制', '位运算', '数组和矩阵问题', '其他题目']
+    # lessons_list = [11, 20, 24, 20, 25, 7, 6, 31, 37]
+    # cl = len(capter_list)
+    # # print(cl)
 
-    for i in range(1, cl + 1):
-        cname = str(i) + capter_name[i - 1]
-        # print(cname)
-        cnamedir_list.append(cname)
-        cpath = tpath + '\\' + cname + '\\' + cname + 'catalogue.txt'
-        # print(cpath)
-        cpath_list.append(cpath)
-        relative_path = cname + 'catalogue.txt'
-        relative_list.append(relative_path)
-    print(cnamedir_list)
-    # print(cpath_list)
-    source_path = tpath + '\\' + 'python_180zuo.txt'
+    # capter_name1 = ['第 1 章  栈和队列', '第 2 章  链表问题', '第 3 章  二叉树问题', '第 4 章  递归和动态规划', '第 5 章  字符串问题', '第 6 章  大数据和空间限制',
+    #                 '第 7 章  位运算', '第 8 章  数组和矩阵问题', '第 9 章  其他题目']
+    #
+    # for i in range(1, cl + 1):
+    #     cname = str(i) + capter_name[i - 1]
+    #     # print(cname)
+    #     cnamedir_list.append(cname)
+    #     cpath = tpath + '\\' + cname + '\\' + cname + 'catalogue.txt'
+    #     # print(cpath)
+    #     cpath_list.append(cpath)
+    #     relative_path = cname + 'catalogue.txt'
+    #     relative_list.append(relative_path)
+    # print(cnamedir_list)
+    # # print(cpath_list)
+    # source_path = tpath + '\\' + 'python_180zuo.txt'
     # print(source_path)
     # 得到切片文件下标
-    slice_list, sn_list = slice_up(source_path, capter_name1)
+    # slice_list, sn_list = slice_up(source_path, capter_name1)
     # 拆分大文件内容到不同文件里,用来做每一章每个算法题的笔记，可选
-    split_file_into_different_files(slice_list, sn_list, cpath_list)
+    # split_file_into_different_files(slice_list, sn_list, cpath_list)
     # 废了获得注释
     # get_annotation(capter_name1, sn_list, slice_list)
     #参数列表:1路径 2每一章多少小节 3编号+章节名称 4书名 5每一章的章节名字 6第i章 每一章的章节名字capter_name1 7对应文件内容的list
-    makefile(tpath, lessons_list, cnamedir_list, bookname, capter_name, capter_name1, sn_list)
+    # makefile(tpath, lessons_list, cnamedir_list, bookname, capter_name, capter_name1, sn_list)
 
 #——————————————————————————————————————————————————————————————————————————————————————————
     """
@@ -175,12 +178,56 @@ if __name__ == '__main__':
         调用makefile()函数来生成文件
         参数列表说明:1路径 2每一章多少小节 3编号+章节名称 4书名 5每一章的章节名字 6第i章 每一章的章节名字capter_name1 7对应文件内容的list
     """
+    """
+    自动生成127篇论文相关的文件和注释
+    第一篇Deep Learning History and Basics
+    """
+    #第一步 定义变量 创建文件夹
+    # 1书名，
+    bookname = "Deep Learning History and Basics"
+    # 2路径
+    path = r'../127paper/Deep Learning History and Basics/'
+    tpath = os.path.realpath(path)  # 绝对路径
+    print(tpath)
+    # 3章节个数(可以自动生成l = [i for i in range(1,10)])，
+    capter_list = [i for i in range(1,5)]
+    # 4每一章多少小节,每一章多少论文
+    lessons_list = [1, 2, 4, 6]
+    # 5每一章的章节名字
+    capter_name = ['Survey', 'Deep Belief Network(DBN)(Milestone of Deep Learning Eve)', 'ImageNet Evolution(Deep Learning broke out from here)', 'Speech Recognition Evolution']
+    cl = len(capter_list)
+    for i in range(1, cl + 1):
+        cname = str(i) + capter_name[i - 1]
+        # print(cname)
+        cnamedir_list.append(cname)
+        cpath = tpath + '\\' + cname + '\\' + cname + 'catalogue.txt'
+        # print(cpath)
+        cpath_list.append(cpath)
+        relative_path = cname + 'catalogue.txt'
+        relative_list.append(relative_path)
+    # print(cnamedir_list)
+    # 第一步最后要创建文件夹
+    # try:
+    #     for i in cnamedir_list:
+    #         # print(i)
+    #         os.chdir(tpath)  # 转换路径
+    #         os.makedirs(i)
+    # except:
+    #     print("@@@@文件夹已创建了")
+    # 第二步 设置切割文件得到切片文件下标:
+    # 5整个目录的文件路径
+    source_path = tpath + '\\' + '13paper.txt'
+    # 6第i章 每一章的章节名字capter_name1
+    capter_name1 = ['1.1 Survey', '1.2 Deep Belief Network(DBN)(Milestone of Deep Learning Eve)', '1.3 ImageNet Evolution(Deep Learning broke out from here)', '1.4 Speech Recognition Evolution']
+    # 第三步 设置得到第二步的返回值 即:切片下标和对应文件内容的list
+    slice_list, sn_list = slice_up(source_path, capter_name1)
+    # 第五步 生成带目录注释的.py文件
+    makefile(tpath, lessons_list, cnamedir_list, bookname, capter_name, capter_name1, sn_list)
+
+
+
+
 # ——————————————————————————————————————————————————————————————————————————————————————————
-
-
-
-
-
 # now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 # print(now)
 # print(type(now))
